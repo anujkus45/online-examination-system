@@ -1,0 +1,98 @@
+{% extends 'sitemaster.html' %}
+{% load static}
+{% block title %}Employee Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-3">
+<h1 class="mb-4">Welcome, {{ employee.user.first_name|default:employee.user.username }}!</h1>
+<p class="lead">Employee ID: {{ employee.employee_id }}</p>
+<p>Department: {{ employee.department|default:"N/A" }}</p>
+
+<hr>
+
+<h2 class="mt-5 mb-3">Available Tests</h2>
+{% if available_tests %}
+    <div class="row">
+    {% for test in available_tests %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ test.technology.name }} Test</h5>
+                    <p class="card-text">
+                        Starts: {{ test.start_time|date:"Y-m-d H:i" }}<br>
+                        Ends: {{ test.end_time|date:"Y-m-d H:i" }}<br>
+                        Duration: {{ test.duration_minutes }} minutes<br>
+                        Questions: {{ test.total_questions }}
+                    </p>
+                    <a href="{% url 'take_exam' test.id %}" class="btn btn-navbar-purple">Take Exam Now</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info">No new tests currently available. Please check back later.</div>
+{% endif %}
+
+<h2 class="mt-5 mb-3">Ongoing Tests</h2>
+{% if ongoing_tests %}
+    <div class="row">
+    {% for attempt in ongoing_tests %}
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 border-warning">
+                <div class="card-body">
+                    <h5 class="card-title">{{ attempt.test_schedule.technology.name }} Test (Ongoing)</h5>
+                    <p class="card-text">
+                        Started: {{ attempt.start_time|date:"Y-m-d H:i" }}<br>
+                        Duration: {{ attempt.test_schedule.duration_minutes }} minutes
+                    </p>
+                    <a href="{% url 'take_exam' attempt.test_schedule.id %}" class="btn btn-warning">Resume Exam</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-secondary">No ongoing tests.</div>
+{% endif %}
+
+
+<h2 class="mt-5 mb-3">Past Test Results</h2>
+{% if past_attempts %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Date Taken</th>
+                    <th>Score (%)</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for attempt in past_attempts %}
+                <tr>
+                    <td>{{ attempt.test_schedule.technology.name }}</td>
+                    <td>{{ attempt.end_time|date:"Y-m-d H:i" }}</td>
+                    <td>{{ attempt.score|floatformat:2 }}%</td>
+                    <td>
+                        {% if attempt.score >= 50 %} {# Example passing score #}
+                            <span class="badge bg-success">Passed</span>
+                        {% else %}
+                            <span class="badge bg-danger">Failed</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'view_employee_result' attempt.id %}" class="btn btn-sm btn-info">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="alert alert-secondary">You have not completed any tests yet.</div>
+{% endif %}
+</div>
+{% endblock %}

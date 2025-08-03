@@ -1,0 +1,80 @@
+{% extends 'sitemaster.html' %}
+
+{% block title %}Exam Result - {{ attempt.employee.user.username }}{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Exam Result</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        Result Details
+    </div>
+    <div class="card-body">
+        <p><strong>Employee:</strong> {{ attempt.employee.user.get_full_name|default:attempt.employee.user.username }} ({{ attempt.employee.employee_id }})</p>
+        <p><strong>Test Technology:</strong> {{ attempt.test_schedule.technology.name }}</p>
+        <p><strong>Date Taken:</strong> {{ attempt.end_time|date:"Y-m-d H:i" }}</p>
+        <p><strong>Your Score:</strong> <span class="fs-4 fw-bold">{{ attempt.score|floatformat:2 }}%</span></p>
+        <p><strong>Status:</strong>
+            {% if attempt.score >= 50 %} {# Example passing score #}
+                <span class="badge bg-success fs-6">PASSED</span>
+            {% else %}
+                <span class="badge bg-danger fs-6">FAILED</span>
+            {% endif %}
+        </p>
+        <p><strong>Total Correct Questions:</strong> {{ correct_count }} / {{ total_questions }}</p>
+        <p><strong>Total Marks Obtained:</strong> {{ total_marks_obtained|floatformat:2 }} / {{ total_possible_marks|floatformat:2 }}</p>
+
+        {% if request.user.is_staff and result %} {# Show declared result info for admin #}
+            <hr>
+            <h6>Declared Result (Admin's View)</h6>
+            <p><strong>Declared By:</strong> {{ result.declared_by.get_full_name|default:result.declared_by.username|default:"N/A" }}</p>
+            <p><strong>Declared At:</strong> {{ result.declared_at|date:"Y-m-d H:i" }}</p>
+            <p><strong>Remarks:</strong> {{ result.remarks|default:"No remarks." }}</p>
+            <a href="{% url 'admin_declare_result' attempt.id %}" class="btn btn-sm btn-secondary">Edit Declared Result</a>
+        {% endif %}
+    </div>
+</div>
+
+<h2 class="mb-3">Question-wise Breakdown</h2>
+{% if answers %}
+    {% for answer in answers %}
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                Question {{ forloop.counter }}
+                {% if answer.is_correct %}
+                    <span class="badge bg-success">Correct</span>
+                {% else %}
+                    <span class="badge bg-danger">Incorrect</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <p class="fw-bold">{{ answer.question.question_text }}</p>
+                <ul class="list-unstyled">
+                    <li><strong {% if answer.question.correct_option == 'A' %}class="text-success"{% endif %}>A)</strong> {{ answer.question.option_a }}</li>
+                    <li><strong {% if answer.question.correct_option == 'B' %}class="text-success"{% endif %}>B)</strong> {{ answer.question.option_b }}</li>
+                    <li><strong {% if answer.question.correct_option == 'C' %}class="text-success"{% endif %}>C)</strong> {{ answer.question.option_c }}</li>
+                    <li><strong {% if answer.question.correct_option == 'D' %}class="text-success"{% endif %}>D)</strong> {{ answer.question.option_d }}</li>
+                </ul>
+                <p><strong>Your Answer:</strong>
+                    {% if answer.selected_option %}
+                        <span class="badge {% if answer.is_correct %}bg-success{% else %}bg-danger{% endif %}">{{ answer.selected_option }}</span>
+                    {% else %}
+                        <span class="badge bg-secondary">Not Answered</span>
+                    {% endif %}
+                </p>
+                <p><strong>Correct Answer:</strong> <span class="badge bg-success">{{ answer.question.correct_option }}</span></p>
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-warning">No detailed answers found for this attempt.</div>
+{% endif %}
+
+<div class="mt-4">
+    {% if request.user.is_staff %}
+        <a href="{% url 'view_all_results' %}" class="btn btn-secondary">Back to All Results</a>
+    {% else %}
+        <a href="{% url 'employee_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    {% endif %}
+</div>
+{% endblock %}

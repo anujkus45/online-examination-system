@@ -1,0 +1,105 @@
+{% extends 'sitemaster.html' %}
+
+{% block title %}EXAMHUB - Home{% endblock %}
+{% load static %}
+
+{% block content %}
+<section class="hero-section text-center text-white">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'images/image1.jpg' %}" class="d-block hero-carousel-img" alt="Student taking an online exam">
+                <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
+                    <h1 class="display-3 fw-bold animate__animated animate__fadeInDown">Empower Your Knowledge. Take the Test.</h1>
+                    <p class="lead mt-4 mb-4 animate__animated animate__fadeInUp animate__delay-1s">Seamless online examinations designed for excellence and ease.</p>
+                    <div class="d-grid gap-3 col-lg-6 mx-auto animate__animated animate__zoomIn animate__delay-2s">
+                        <a href="{% url 'employee_register' %}" class="btn btn-primary btn-lg shadow-sm">Get Started - Register Now!</a>
+                        <a href="{% url 'employee_login' %}" class="btn btn-outline-light btn-lg shadow-sm">Already a Member? Login</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/image2.jpg' %}" class="d-block hero-carousel-img" alt="Person studying with a laptop and books">
+                <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
+                    <h1 class="display-3 fw-bold">Create Online Tests Easily</h1>
+                    <p class="lead mt-4 mb-4">Flexible scheduling and instant results for all users.</p>
+                    <div class="d-grid gap-3 col-lg-6 mx-auto">
+                        <a href="{% url 'employee_register' %}" class="btn btn-primary btn-lg shadow-sm">Get Started - Register Now!</a>
+                        <a href="{% url 'employee_login' %}" class="btn btn-outline-light btn-lg shadow-sm">Already a Member? Login</a>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="{% static 'images/image3.jpeg' %}" class="d-block hero-carousel-img" alt="Secure digital interface on a laptop">
+                <div class="carousel-caption d-flex flex-column justify-content-center align-items-center h-100">
+                    <h1 class="display-3 fw-bold">Secure & Reliable Platform</h1>
+                    <p class="lead mt-4 mb-4">Your data and exams are protected with advanced security.</p>
+                    <div class="d-grid gap-3 col-lg-6 mx-auto">
+                        <a href="{% url 'employee_register' %}" class="btn btn-primary btn-lg shadow-sm">Get Started - Register Now!</a>
+                        <a href="{% url 'employee_login' %}" class="btn btn-outline-light btn-lg shadow-sm">Already a Member? Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button> -->
+    </div>
+</section>
+
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 fw-bold text-dark">Why Choose ExamHub?</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 animate__animated animate__fadeInLeft">
+                    <div class="card-body text-center">
+                        <i class="bi bi-laptop feature-icon mb-3"></i>
+                        <h5 class="card-title fw-bold">User-Friendly Interface</h5>
+                        <p class="card-text text-muted">Intuitive design for a smooth and stress-free exam experience.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 animate__animated animate__fadeInUp">
+                    <div class="card-body text-center">
+                        <i class="bi bi-clock feature-icon mb-3"></i>
+                        <h5 class="card-title fw-bold">Timed & Secure Exams</h5>
+                        <p class="card-text text-muted">Ensuring fairness and integrity with timed assessments and secure protocols.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 animate__animated animate__fadeInRight">
+                    <div class="card-body text-center">
+                        <i class="bi bi-award feature-icon mb-3"></i>
+                        <h5 class="card-title fw-bold">Instant Results</h5>
+                        <p class="card-text text-muted">Get immediate feedback on your performance right after submission.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section py-5 text-center text-white">
+    <div class="container">
+        <h2 class="fw-bold mb-4">Ready to Test Your Skills?</h2>
+        <p class="lead mb-5">Join our growing community of learners and professionals today.</p>
+        <a href="{% url 'employee_register' %}" class="btn btn-light btn-lg cta-btn">Start Your Journey Now!</a>
+    </div>
+</section>
+
+<footer class="footer bg-dark text-white text-center">
+    <p class="mb-1">&copy; 2025 ExamHub. All rights reserved.</p>
+    <p>
+        <a href="#" class="text-white mx-2 text-decoration-none">Privacy Policy</a> |
+        <a href="#" class="text-white mx-2 text-decoration-none">Terms of Service</a>
+    </p>
+</footer>
+{% endblock %}

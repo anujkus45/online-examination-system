@@ -1,0 +1,394 @@
+/* Custom Color Palette */
+:root {
+    --ice-cold: #a0d2eb;
+    --freeze-purple: #e5eaf5;
+    --medium-purple: #d0bdf4;
+    --purple-pain: #8458B3;
+    --heavy-purple: #a28089;
+    --text-dark: #343a40; /* Keeping a dark text color for readability */
+    --light-bg: #f8f9fa; /* Keeping a very light background for content areas */
+
+    /* Additional custom variables for general design */
+    --navbar-bg: var(--purple-pain);
+    --hero-gradient-start: var(--purple-pain);
+    --hero-gradient-end: var(--medium-purple);
+    --cta-bg: var(--heavy-purple); /* Using heavy purple for CTA background */
+    --footer-bg: var(--text-dark); /* Using the dark text color for footer */
+}
+
+/* General Body Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg); /* Light grey background */
+    color: var(--text-dark); /* Dark text color */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar Styling */
+.navbar {
+    background-color: var(--navbar-bg) !important; /* Primary purple for navbar */
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    position: relative; /* Changed to relative for flow */
+    z-index: 1020; /* Ensure it's above other content if needed */
+}
+.navbar-brand {
+    font-weight: bold;
+    color: #fff !important; /* Keep brand name white for contrast */
+}
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important; /* Slightly transparent white for nav links */
+}
+.navbar-nav .nav-link:hover {
+    color: #fff !important; /* Solid white on hover */
+}
+/* For the "Welcome, User" text in navbar */
+.navbar-text {
+    color: #fff !important; /* Ensure welcome text is white */
+}
+
+/* Custom style for navbar buttons to use purple-pain */
+.btn-navbar-purple {
+    background-color: #b294e9 !important; /* A lighter purple for background */
+    color: black !important; /* Dark purple text */
+    border-color: var(--purple-pain) !important; /* Dark purple border */
+    font-weight: 600;
+    padding: 0.4rem 1rem; /* Adjust padding for navbar button size */
+    border-radius: 0.3rem; /* Match other buttons' rounding */
+    transition: all 0.3s ease; /* Smooth transitions for hover */
+    margin-left: 5px; /* Small spacing from other nav items */
+    margin-right: 5px;
+}
+
+.btn-navbar-purple:hover {
+    background-color: var(--purple-pain) !important; /* Fill with dark purple on hover */
+    color: #fff !important; /* White text on hover */
+    border-color: var(--purple-pain) !important; /* Keep border color consistent */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow on hover */
+}
+
+/* Ensure other nav-links (like Home, Login, Register) remain white */
+/* This rule targets nav-links that do NOT have the 'btn' class */
+.navbar-nav .nav-link:not(.btn) {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+.navbar-nav .nav-link:not(.btn):hover {
+    color: #fff !important;
+}
+
+
+/* --- Homepage Specific Styles --- */
+
+.hero-section {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 600px; /* Increased height for better visual impact of carousel */
+    overflow: hidden;
+    background-color: var(--purple-pain); /* Fallback background if image fails */
+}
+
+/* Ensure carousel elements fill the hero-section */
+.hero-section .carousel,
+.hero-section .carousel-inner,
+.hero-section .carousel-item {
+    height: 100%;
+    width: 100%;
+}
+
+.hero-carousel-img {
+    height: 100%; /* Make image take full height of hero section */
+    width: 100%; /* Make image take full width */
+    object-fit: cover; /* Cover the area, cropping if necessary */
+    opacity: 0.5; /* Slightly more opaque for better contrast with text */
+    position: absolute; /* Essential for filling the parent */
+    top: 0;
+    left: 0;
+    z-index: 1; /* Behind text */
+}
+
+.carousel-caption {
+    position: absolute; /* Essential for layering */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2; /* Above image */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Added some padding for content */
+    background: rgba(0, 0, 0, 0.4); /* Slightly darker overlay for text readability */
+    color: #fff;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem; /* Larger heading */
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Stronger shadow for readability */
+}
+
+.hero-section p.lead {
+    font-size: 1.25rem;
+    max-width: 800px; /* Wider text for better flow */
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.98); /* Brighter text on overlay */
+}
+
+.hero-section .btn {
+    padding: 0.8rem 2.5rem; /* Slightly larger buttons */
+    font-size: 1.15rem; /* Slightly larger text */
+    border-radius: 50px; /* Pill-shaped buttons */
+    font-weight: 600;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem; /* Space between text and buttons */
+}
+.hero-section .btn-primary {
+    background-color: var(--ice-cold); /* Use Ice Cold for primary hero button */
+    border-color: var(--ice-cold);
+    color: var(--text-dark);
+}
+.hero-section .btn-primary:hover {
+    background-color: #8cc4e0;
+    border-color: #8cc4e0;
+}
+.hero-section .btn-outline-light {
+    border-color: #fff;
+    color: #fff;
+}
+.hero-section .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.features-section {
+    padding: 80px 0; /* More padding for separation */
+    background-color: var(--light-bg); /* Use the light background color */
+}
+
+.features-section h2 {
+    font-size: 3rem; /* Larger heading for features */
+    margin-bottom: 3.5rem;
+    color: var(--text-dark);
+}
+
+.feature-icon {
+    font-size: 3.5rem; /* Larger icons for impact */
+    color: var(--purple-pain); /* Feature icons to Purple Pain */
+    margin-bottom: 1.5rem;
+}
+
+.cta-section {
+    background: var(--cta-bg); /* Call to action background to Heavy Purple */
+    padding: 100px 0; /* More padding */
+    text-align: center;
+}
+
+.cta-section h2 {
+    font-size: 3rem;
+    color: #fff;
+}
+.cta-section p.lead {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 3rem; /* Space before button */
+}
+.cta-btn {
+    background-color: var(--ice-cold); /* CTA button to Ice Cold */
+    border-color: var(--ice-cold);
+    color: var(--text-dark); /* Dark text for contrast */
+    font-weight: 700;
+    padding: 1rem 3rem; /* Larger button */
+    font-size: 1.25rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+.cta-btn:hover {
+    background-color: #8cc4e0; /* Slightly darker Ice Cold on hover */
+    border-color: #8cc4e0;
+    transform: translateY(-3px); /* More pronounced lift */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.footer {
+    background-color: var(--footer-bg);
+    color: rgba(255, 255, 255, 0.7);
+    padding: 25px 0; /* Adjusted padding */
+    font-size: 0.9rem;
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+.footer p {
+    margin-bottom: 0.5rem;
+}
+
+.footer a {
+    color: rgba(255, 255, 255, 0.8);
+}
+.footer a:hover {
+    color: #fff;
+}
+
+
+/* --- General UI Styles --- */
+/* Container for content */
+.container {
+    padding-top: 30px; /* Increased padding */
+    padding-bottom: 30px;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 0.75rem; /* Slightly more rounded corners */
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,.1); /* Stronger shadow */
+    margin-bottom: 2rem; /* More space between cards */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover */
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
+}
+.card-header {
+    background-color: var(--freeze-purple);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    font-weight: bold;
+    padding: 1rem 1.5rem; /* More padding */
+    color: var(--text-dark);
+    font-size: 1.1rem;
+}
+.card-body {
+    padding: 1.5rem; /* More padding */
+    background-color: #fff;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    border-radius: 0.4rem; /* Slightly more rounded */
+    border: 1px solid var(--medium-purple);
+    padding: 0.6rem 0.9rem; /* Slightly more padding */
+    margin-bottom: 1.25rem; /* More space */
+    font-size: 1.05rem;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--purple-pain);
+    box-shadow: 0 0 0 0.25rem rgba(132, 88, 179, 0.35); /* Stronger shadow */
+}
+
+/* Buttons */
+.btn {
+    border-radius: 0.4rem; /* Consistent rounding */
+    padding: 0.7rem 1.4rem; /* Consistent padding */
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+.btn-primary {
+    background-color: var(--purple-pain);
+    border-color: var(--purple-pain);
+}
+.btn-primary:hover {
+    background-color: var(--heavy-purple);
+    border-color: var(--heavy-purple);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.btn-success {
+    background-color: var(--ice-cold);
+    border-color: var(--ice-cold);
+    color: var(--text-dark);
+}
+.btn-success:hover {
+    background-color: #8cc4e0;
+    border-color: #8cc4e0;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+.btn-info {
+    background-color: var(--medium-purple);
+    border-color: var(--medium-purple);
+    color: #fff;
+}
+.btn-info:hover {
+    background-color: var(--purple-pain);
+    border-color: #bfa7e0;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Alerts and Messages */
+.alert {
+    border-radius: 0.4rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+}
+
+/* Table Styles */
+.table {
+    margin-bottom: 1.5rem;
+}
+.table thead th {
+    border-bottom: 2px solid var(--medium-purple);
+    background-color: var(--freeze-purple);
+    color: var(--text-dark);
+    padding: 0.85rem;
+    font-size: 1rem;
+}
+.table td, .table th {
+    padding: 0.85rem;
+}
+
+/* Specific elements like exam timer */
+#time-left {
+    font-weight: bold;
+    color: #dc3545;
+    font-size: 1.2rem;
+}
+
+/* Forms with labels */
+label {
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+}
+
+/* Small utility classes (adjusted for consistency) */
+.mb-4 { margin-bottom: 2rem !important; }
+.mt-4 { margin-top: 2rem !important; }
+.text-center { text-align: center !important; }
+.fs-1 { font-size: 2.75rem !important; }
+.lead { font-size: 1.35rem; font-weight: 300; }
+
+/* Ensuring no gaps between sections */
+body > section, body > footer {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+}
+
+.hero-section + .features-section {
+    padding-top: 80px; /* Ensure first content section has top padding */
+}
+
+.features-section + .cta-section {
+    padding-top: 100px; /* Ensure CTA section has top padding */
+}

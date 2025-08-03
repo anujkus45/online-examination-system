@@ -1,0 +1,132 @@
+{% extends 'sitemaster.html' %}
+{% load dict_extras %}
+{% block title %}Take Exam - {{ test_schedule.technology.name }}{% endblock %}
+{% load static %}
+{% block content %}
+<style>
+    .timer-display {
+        font-size: 1.25rem;
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    .timer-value {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: #d62b2b;
+        display: inline-block;
+        min-width: 100px;
+    }
+    
+    /* Time Warning States */
+    .timer-value.warning {
+        color: #ff6b00;
+        animation: pulse 1s infinite alternate;
+    }
+    
+    .timer-value.critical {
+        color: #ff0000;
+        animation: pulse 0.5s infinite alternate;
+    }
+    
+    @keyframes pulse {
+        from { opacity: 1; }
+        to { opacity: 0.7; }
+    }
+</style>
+
+<div class="container my-4">
+    <h1 class="mb-3">{{ test_schedule.technology.name }} Exam</h1>
+    <p class="lead text-muted mb-4">Duration: {{ test_schedule.duration_minutes }} minutes</p>
+    <div class="timer-wrapper">
+        <div class="timer-display">
+            Time remaining: <span id="time-left" class="timer-value"></span>
+        </div>
+    </div>
+
+<form method="post" action="{% url 'submit_exam' test_schedule.id %}" id="examForm">
+    {% csrf_token %}
+    <input type="hidden" name="test_attempt_id" value="{{ test_attempt_id }}">
+
+    {% for question in questions %}
+        <div class="card mb-3">
+            <div class="card-header">
+                Question {{ forloop.counter }}: <small class="float-end">Marks: {{ question.marks|floatformat:1 }}</small>
+            </div>
+            <div class="card-body">
+                <p class="card-text fw-bold">{{ question.question_text }}</p>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_a" value="A" {% if existing_answers|get_item:question.id == 'A' %}checked{% endif %}>
+                    <label class="form-check-label" for="q{{ question.id }}_a">
+                        A) {{ question.option_a }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_b" value="B" {% if existing_answers|get_item:question.id == 'B' %}checked{% endif %}>
+                    <label class="form-check-label" for="q{{ question.id }}_b">
+                        B) {{ question.option_b }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_c" value="C" {% if existing_answers|get_item:question.id == 'C' %}checked{% endif %}>
+                    <label class="form-check-label" for="q{{ question.id }}_c">
+                        C) {{ question.option_c }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_d" value="D" {% if existing_answers|get_item:question.id == 'D' %}checked{% endif %}>
+                    <label class="form-check-label" for="q{{ question.id }}_d">
+                        D) {{ question.option_d }}
+                    </label>
+                </div>
+                <div class="form-check mb-2">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}" id="q{{ question.id }}_none" value="" {% if not existing_answers|get_item:question.id %}checked{% endif %}>
+                    <label class="form-check-label" for="q{{ question.id }}_none">
+                        No Answer / Clear Selection
+                    </label>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Submit Exam</button>
+</form>
+
+ <script>
+        // Timer functionality
+        var timeLeft = {{ time_left_seconds }};
+        var timerDisplay = document.getElementById('time-left');
+        var examForm = document.getElementById('examForm');
+        function updateTimer() {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                timerDisplay.textContent = "00:00";
+                examForm.submit();
+                return;
+            }
+            // Update visual state based on remaining time
+            if (timeLeft <= 30) {
+                timerDisplay.classList.add('critical');
+                timerDisplay.classList.remove('warning');
+            } else if (timeLeft <= 120) {
+                timerDisplay.classList.add('warning');
+            }
+            var minutes = Math.floor(timeLeft / 60);
+            var seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            timeLeft--;
+        }
+        var timerInterval = setInterval(updateTimer, 1000);
+        updateTimer(); // Initial call to display time immediately
+ </script>
+
+
+
+{% comment %}
+{% load my_custom_filters %}
+<input ... {% if existing_answers|get_item:question.id == 'A' %}checked{% endif %}>
+{% endcomment %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'sitemaster.html' %}
+{% load static %}
+{% block title %}{{ title }} - Admin{% endblock %}
+
+{% block content %}
+<div class="container m-4">
+<h1 class="mb-4">{{ title }}</h1>
+
+<form method="post" class="card p-4">
+    {% csrf_token %}
+    {% for field in form %}
+        <div class="mb-3">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.help_text %}
+                <div class="form-text">{{ field.help_text }}</div>
+            {% endif %}
+            {% for error in field.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary mt-3">Save Technology</button>
+    <a href="{% url 'admin_manage_technologies' %}" class="btn btn-secondary mt-2">Cancel</a>
+</form>
+</div>
+{% endblock %}
